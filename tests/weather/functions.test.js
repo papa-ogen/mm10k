@@ -29,4 +29,33 @@ test('should translate weather type', function (t) {
       t.equal(wc.getWeatherDay(index), weekDays[index])
     })
   })
+
+  test('should return CSS class for icon', function(t) {
+    t.plan(18)
+
+    const iconCodes = ['01d', '01n', '02d', '02n', '03d', '03n', '04d', '04n', '09d', '09n', '10d', '10n', '11d', '11n', '13d', '13n', '50d', '50n']
+    const cssClass = ['sun', 'sun', 'clouds', 'clouds', 'clouds', 'clouds', 'broken-cloud', 'broken-cloud', 'rainy-2', 'rainy-2', 'rain', 'rain', 'thunder', 'thunder', 'snow', 'snow', 'mm-weather-icon-mist', 'mm-weather-icon-mist']
+
+    iconCodes.forEach((code, index) => {
+      t.equal(wc.getIconCssClass(code), cssClass[index])
+    })
+  })
+
+  test('should return default CSS class for icon', function(t) {
+    t.plan(1)
+
+    const givenValue = 'Didde'
+    const expectedValue = 'sun'
+
+    t.equal(wc.getIconCssClass(givenValue), expectedValue)
+  })
+
+  test('should return monday from date string', function(t) {
+    t.plan(1)
+
+    const givenDateString = '2018-07-02 21:00:00'
+    const expectedWeekDay = 1
+
+    t.equal(wc.getWeekDay(givenDateString), expectedWeekDay)
+  })
 });

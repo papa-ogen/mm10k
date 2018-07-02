@@ -23,7 +23,7 @@ exports.getWeather = () => {
   };
 }
 
-function weatherIconClass(iconCode) {
+exports.getIconCssClass = iconCode => {
   switch (iconCode) {
     case "01d":
     case "01n":
@@ -57,8 +57,8 @@ function weatherIconClass(iconCode) {
   }
 };
 
-exports.translateWeatherType = (type) => {
-  let _type = type.toLowerCase();
+exports.translateWeatherType = type => {
+  const _type = type.toLowerCase();
   switch (_type) {
     case "clear":
     case "clear sky": return "klart";
@@ -77,7 +77,7 @@ exports.translateWeatherType = (type) => {
   }
 };
 
-exports.getWeatherDay = (day) => {
+exports.getWeatherDay = day => {
   switch (day) {
     case 0: return "Söndag";
     case 1: return "Måndag";
@@ -87,6 +87,12 @@ exports.getWeatherDay = (day) => {
     case 5: return "Fredag";
     case 6: return "Lördag";
   }
+}
+
+exports.getWeekDay = dateStr => {
+  const d = dateStr.length ? dateStr.replace(/\s/g, 'T') : 0;
+
+  return d ? new Date(d).getDay() : 0
 }
 
 function getTime(data) {
