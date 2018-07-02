@@ -57,7 +57,7 @@ function weatherIconClass(iconCode) {
   }
 };
 
-function weatherType(type) {
+exports.weatherType = (type) => {
   let _type = type.toLowerCase();
   switch (_type) {
     case "clear":
