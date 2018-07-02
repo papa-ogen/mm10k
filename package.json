@@ -1,0 +1,26 @@
+{
+  "name": "mm10k",
+  "version": "1.0.0",
+  "description": "version 5.7 million of Magic Mirror",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/papa-ogen/mm10k.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/papa-ogen/mm10k/issues"
+  },
+  "homepage": "https://github.com/papa-ogen/mm10k#readme",
+  "dependencies": {
+    "express": "^4.16.3",
+    "nodemon": "^1.17.5",
+    "pug": "^2.0.3"
+  }
+}
