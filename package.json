@@ -23,5 +23,8 @@
     "nodemon": "^1.17.5",
     "pug": "^2.0.3",
     "request": "^2.87.0"
+  },
+  "devDependencies": {
+    "tape": "^4.9.1"
   }
 }
