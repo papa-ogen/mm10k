@@ -77,7 +77,7 @@ exports.translateWeatherType = (type) => {
   }
 };
 
-function getWeatherDay(day) {
+exports.getWeatherDay = (day) => {
   switch (day) {
     case 0: return "Söndag";
     case 1: return "Måndag";
