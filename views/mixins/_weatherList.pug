@@ -1,0 +1,7 @@
+mixin weatherList(weather)
+    section.module
+      each item in weather.weathers
+        .column
+          h2 #{item.date} #{item.temp} C°
+          i(class="mm-weather-icon-" + item.type + " mm-weather-icon")
+          h3= item.descr

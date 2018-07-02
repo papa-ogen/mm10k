@@ -1,0 +1,20 @@
+.mm-weather {
+  text-align: center;
+  max-width: 400px;
+}
+
+.icon {
+  display: inline-block;
+  text-indent: -9999px;
+  vertical-align: middle;
+  margin-top: -4px;
+  margin-right: 0.8rem;
+  width: 30px;
+  height: 30px;
+  fill: #fff;
+}
+
+.icon--small {
+  width: 24px;
+  height: 24px;
+}

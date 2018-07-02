@@ -1,0 +1,16 @@
+include mixins/_weatherList
+
+if weatherData.weathers.length > 1
+  section.mm-weather
+    h1.mm--title Skälby
+    +weatherList(weatherData)
+
+else
+  section.columns.mm-weather
+    .column.is-one-third
+      h1.mm--h1 Skälby
+      .columns
+        .column
+          h2 Måndag 12.7 C°
+          i.mm-weather-icon-broken-cloud.mm-weather-icon
+          h3 molnigt
