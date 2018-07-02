@@ -58,4 +58,13 @@ test('should translate weather type', function (t) {
 
     t.equal(wc.getWeekDay(givenDateString), expectedWeekDay)
   })
+
+  test('should return sunday if empty date string', function(t) {
+    t.plan(1)
+
+    const givenDateString = ''
+    const expectedWeekDay = 0
+
+    t.equal(wc.getWeekDay(givenDateString), expectedWeekDay)
+  })
 });
