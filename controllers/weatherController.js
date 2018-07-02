@@ -95,18 +95,6 @@ exports.getWeekDay = dateStr => {
   return d ? new Date(d).getDay() : 0
 }
 
-function getTime(data) {
-  let d = data !== "undefined" ? data.replace(/\s/g, "T") : "";
-  let day;
-
-  if (d.length > 0) {
-    day = new Date(d).getDay();
-    return getWeatherDay(day);
-  }
-
-  return 0;
-}
-
 const filterData = (data) => {
   const weathers = [];
   let _weather = [];
