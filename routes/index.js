@@ -3,16 +3,6 @@ const router = express.Router();
 const weatherController = require('../controllers/weatherController');
 const request = require('request');
 
-// const apiParams = {
-//   apiUrl: 'http://api.openweathermap.org/data/2.5/forecast',
-//   apiKey: process.env.WEATHER_KEY,
-//   coords: {
-//     lat: 59.3833,
-//     lon: 17.8333
-//   }
-// }
-// const requestUrl = weatherController.createRequestUrl(apiParams)
-
 const getData = url => {
   const options = {
       url: url,
@@ -46,18 +36,20 @@ const main = (req, res) => {
     }
   }
   const requestUrl = weatherController.createRequestUrl(apiParams)
-  getData(requestUrl)
+  const weather = getData(requestUrl)
   .then(JSON.parse, errHandler)
   .then((result) => {
-      res.render('index', { 
-        title: "MM10K", 
-        weatherData: weatherController.filterData(result)
-      })
-      // Do one more async operation here
-      // var anotherPromise = getData(userDetails.followers_url).then(JSON.parse);
-      // return anotherPromise;
+      return weatherController.filterData(result)
   }, errHandler)
   .catch(console.error)
+
+  Promise.all([weather])
+  .then(([weatherData]) => {
+    return res.render('index', {
+      title: "MM10K", 
+      weatherData: weatherData
+    })
+  });
 }
 
 router.get('/', function (req, res) {
