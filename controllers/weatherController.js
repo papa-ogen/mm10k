@@ -129,8 +129,8 @@ const createWeatherForecast = listData => {
   return listData.filter((listRow, index) => {
     return index % 8 === 0
   })
-  .map((filteredListRow) => {
-    return createWeatherColumn(filteredListRow)
+  .map(listRow => {
+    return createWeatherColumn(listRow)
   })
   .slice(0,3)
 }
