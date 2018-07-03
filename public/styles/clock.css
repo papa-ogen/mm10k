@@ -1,0 +1,44 @@
+.mm-clock {
+  text-align: center;
+  max-width: 264px;
+  padding: 1rem 0;
+}
+
+.mm-time {
+  font-size: 6rem;
+  line-height: 4.5rem;
+}
+
+.mm-clock-divider {
+  animation: colorfade 1s linear infinite alternate;
+}
+
+.mm-clock footer {
+  margin-top: 1rem;
+  line-height: 1.5em;
+}
+
+@keyframes colorfade {
+  from {
+    color: #fff;
+  }
+  to {
+    color: #000;
+  }
+}
+
+.icon {
+  display: inline-block;
+  text-indent: -9999px;
+  vertical-align: middle;
+  margin-top: -4px;
+  margin-right: 0.8rem;
+  width: 30px;
+  height: 30px;
+  fill: #fff; 
+}
+
+.icon--small {
+  width: 24px;
+  height: 24px;
+}
