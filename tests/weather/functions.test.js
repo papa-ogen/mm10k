@@ -1,5 +1,6 @@
 const test = require('tape');
 const wc = require('../../controllers/weatherController')
+const weatherData = require('../../data/weather_data')
 
 test('should translate weather type', function (t) {
   t.plan(12)
@@ -26,7 +27,7 @@ test('should translate weather type', function (t) {
     const weekDays = ['Söndag', 'Måndag', 'Tisdag', 'Onsdag', 'Torsdag', 'Fredag', 'Lördag']
 
     weekDays.forEach((day, index) => {
-      t.equal(wc.getWeatherDay(index), weekDays[index])
+      t.equal(wc.getWeekDayAsString(index), weekDays[index])
     })
   })
 
@@ -56,7 +57,7 @@ test('should translate weather type', function (t) {
     const givenDateString = '2018-07-02 21:00:00'
     const expectedWeekDay = 1
 
-    t.equal(wc.getWeekDay(givenDateString), expectedWeekDay)
+    t.equal(wc.getWeekDayNumber(givenDateString), expectedWeekDay)
   })
 
   test('should return sunday if empty date string', function(t) {
@@ -65,6 +66,85 @@ test('should translate weather type', function (t) {
     const givenDateString = ''
     const expectedWeekDay = 0
 
-    t.equal(wc.getWeekDay(givenDateString), expectedWeekDay)
+    t.equal(wc.getWeekDayNumber(givenDateString), expectedWeekDay)
+  })
+
+  test('should convert Kelvin to Celsius', t => {
+    t.plan(1)
+
+    const givenTemp = 289.96
+    const expectedTemp = 16.8
+
+    t.equal(wc.convertKelvinToCelcius(givenTemp), expectedTemp)
+  })
+
+  test('should return a new weatherColumn object from a listRow', t => {
+    t.plan(1)
+
+    const givenListRow = {
+      'dt': 1530597600,
+      'main': {
+        'temp': 289.96,
+        'temp_min': 288.974,
+        'temp_max': 289.96,
+        'pressure': 1022.26,
+        'sea_level': 1024.75,
+        'grnd_level': 1022.26,
+        'humidity': 65,
+        'temp_kf': 0.99
+      },
+      'weather': [
+        {
+          'id': 803,
+          'main': 'Clouds',
+          'description': 'broken clouds',
+          'icon': '04d'
+        }
+      ],
+      'clouds': {
+        'all': 64
+      },
+      'wind': {
+        'speed': 3.31,
+        'deg': 340.501
+      },
+      'sys': {
+        'pod': 'd'
+      },
+      'dt_txt': '2018-07-03 06:00:00'
+    }
+    const expectedWeatherColumn = {
+      weekDay: 'Tisdag',
+      temp: 16.8,
+      type: 'broken-cloud',
+      descr: 'molnigt'
+    }
+
+    t.deepEquals(wc.createWeatherColumn(givenListRow), expectedWeatherColumn)
+  })
+
+  test('should return weather forecast object with 3 items', t => {
+    t.plan(1)
+
+    const givenWeatherData = weatherData.weatherData.list
+    const expectedWeatherData = [ { weekDay: 'Tisdag', temp: 16.8, type: 'broken-cloud', descr: 'molnigt' }, { weekDay: 'Onsdag', temp: 16.9, type: 'clouds', descr: 'molnigt' }, { weekDay: 'Torsdag', temp: 15.7, type: 'rain', descr: 'regn' } ]
+
+    t.deepEquals(wc.createWeatherForecast(givenWeatherData), expectedWeatherData)
+  })
+
+  test('should create request URL', t => {
+    t.plan(1)
+
+    const givenParams = {
+      apiUrl: 'http://api.openweathermap.org/data/2.5/forecast',
+      apiKey: '123abc',
+      coords: {
+        lat: 59.3833,
+        lon: 17.8333
+      }
+    }
+    const expectedUrl = 'http://api.openweathermap.org/data/2.5/forecast?lat=59.3833&lon=17.8333&appid=123abc'
+
+    t.equal(wc.createRequestUrl(givenParams), expectedUrl)
   })
 });

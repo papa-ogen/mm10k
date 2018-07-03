@@ -23,7 +23,7 @@ exports.getWeather = () => {
   };
 }
 
-exports.getIconCssClass = iconCode => {
+const getIconCssClass = iconCode => {
   switch (iconCode) {
     case "01d":
     case "01n":
@@ -55,9 +55,11 @@ exports.getIconCssClass = iconCode => {
     default:
       return "sun";
   }
-};
+}
 
-exports.translateWeatherType = type => {
+exports.getIconCssClass = getIconCssClass
+
+const translateWeatherType = type => {
   const _type = type.toLowerCase();
   switch (_type) {
     case "clear":
@@ -75,10 +77,12 @@ exports.translateWeatherType = type => {
     default:
       return _type;
   }
-};
+}
 
-exports.getWeatherDay = day => {
-  switch (day) {
+exports.translateWeatherType = translateWeatherType
+
+const getWeekDayAsString = weekDayNumber => {
+  switch (weekDayNumber) {
     case 0: return "Söndag";
     case 1: return "Måndag";
     case 2: return "Tisdag";
@@ -89,36 +93,64 @@ exports.getWeatherDay = day => {
   }
 }
 
-exports.getWeekDay = dateStr => {
+exports.getWeekDayAsString = getWeekDayAsString
+
+const getWeekDayNumber = dateStr => {
   const d = dateStr.length ? dateStr.replace(/\s/g, 'T') : 0;
 
   return d ? new Date(d).getDay() : 0
 }
 
-const filterData = (data) => {
-  const weathers = [];
-  let _weather = [];
+exports.getWeekDayNumber = getWeekDayNumber
 
-  data.list.forEach(function (w, index) {
-    if(weathers.length >= 3) return;
+const convertKelvinToCelcius = temp => {
+  return parseFloat((temp - 273.15).toFixed(1))
+}
 
-    if (index % 8 === 0) {
-      _weather = {
-        "date": getTime(w.dt_txt),
-        "temp": (w.main.temp - 273.15).toFixed(1),
-        "type": weatherIconClass(w.weather[0].icon),
-        "descr": weatherType(w.weather[0].main)
-      }
+exports.convertKelvinToCelcius = convertKelvinToCelcius
 
-      weathers.push(_weather);
-    }
-  });
-
+const createWeatherColumn = listRow => {
+  
+  const weekDay = getWeekDayAsString(getWeekDayNumber(listRow.dt_txt)) 
+  const temp = convertKelvinToCelcius(listRow.main.temp)
+  const type = getIconCssClass(listRow.weather[0].icon)
+  const descr = translateWeatherType(listRow.weather[0].main)
   return {
-    "location": "Skälby",
-    "weathers": weathers
+    weekDay,
+    temp,
+    type,
+    descr
   }
 }
+
+exports.createWeatherColumn = createWeatherColumn
+
+const createWeatherForecast = listData => {
+  return listData.filter((listRow, index) => {
+    return index % 8 === 0
+  })
+  .map((filteredListRow) => {
+    return createWeatherColumn(filteredListRow)
+  })
+  .slice(0,3)
+}
+
+exports.createWeatherForecast = createWeatherForecast
+
+const filterData = data => {
+  return {
+    "location": "Skälby",
+    "weathers": createWeatherForecast(data.list)
+  }
+}
+
+exports.filterData = filterData
+
+const createRequestUrl = ({ apiUrl, apiKey, coords }) => {
+  return `${apiUrl}?lat=${coords.lat}&lon=${coords.lon}&appid=${apiKey}`
+}
+
+exports.createRequestUrl = createRequestUrl
 
 exports.homePage = (req, res) => {
   const forecast = true;
