@@ -153,21 +153,24 @@ const createRequestUrl = ({ apiUrl, apiKey, coords }) => {
 exports.createRequestUrl = createRequestUrl
 
 exports.homePage = (req, res) => {
-  const forecast = true;
-  const apiUrl = forecast ? 'http://api.openweathermap.org/data/2.5/forecast' : 'http://api.openweathermap.org/data/2.5/weather';
-  const lat = '59.3833';
-  const lon = '17.8333';
-  const coordParam = `lat=${lat}&lon=${lon}`;
-  const apiKey = `appid=${process.env.WEATHER_KEY}`;
-  const apiParams = `${apiUrl}?${coordParam}&${apiKey}`;
+  const apiParams = {
+    apiUrl: 'http://api.openweathermap.org/data/2.5/forecast',
+    apiKey: process.env.WEATHER_KEY,
+    coords: {
+      lat: 59.3833,
+      lon: 17.8333
+    }
+  }
 
-  request(apiParams, function (error, response, body) {
+  const requestUrl = createRequestUrl(apiParams)
+
+  request(requestUrl, function (error, response, body) {
     if (!error && response.statusCode == 200) {
 
-      res.render('weatherModule',
+      res.render('weather',
         {
           title: 'Magic Mirror',
-          weather: filterData(JSON.parse(response.body))
+          weatherData: filterData(JSON.parse(response.body))
         });
     }
   })

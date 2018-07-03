@@ -3,7 +3,7 @@ const router = express.Router();
 const weatherController = require('../controllers/weatherController');
 const request = require('request');
 
-const givenParams = {
+const apiParams = {
   apiUrl: 'http://api.openweathermap.org/data/2.5/forecast',
   apiKey: process.env.WEATHER_KEY,
   coords: {
@@ -11,7 +11,7 @@ const givenParams = {
     lon: 17.8333
   }
 }
-const requestUrl = weatherController.createRequestUrl(givenParams)
+const requestUrl = weatherController.createRequestUrl(apiParams)
 
 router.get('/', function (req, res) {
   request(requestUrl, function (error, response, body) {
