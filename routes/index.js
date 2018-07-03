@@ -26,6 +26,25 @@ const errHandler = function(err) {
     console.log('Error', err);
 }
 
+const getTodaysName = (period) => {
+  return new Promise((resolve, reject) => {
+    const interval = setInterval(() => {
+      getData('http://api.dryg.net/dagar/v2.1/')
+        .then(JSON.parse, errHandler)
+        .then((data) => {
+          // resolve(data.dagar[0].namnsdag.join(', '))
+          const d = new Date()
+          resolve(d.getSeconds())
+        })
+        .catch((error) => {
+          console.error(error)
+          clearInterval(interval);
+          reject('fail')
+       })
+    }, period);
+  });
+};
+
 const main = (req, res) => {
   const apiParams = {
     apiUrl: 'http://api.openweathermap.org/data/2.5/forecast',
@@ -37,17 +56,20 @@ const main = (req, res) => {
   }
   const requestUrl = weatherController.createRequestUrl(apiParams)
   const weather = getData(requestUrl)
-  .then(JSON.parse, errHandler)
-  .then((result) => {
-      return weatherController.filterData(result)
-  }, errHandler)
-  .catch(console.error)
+    .then(JSON.parse, errHandler)
+    .then((result) => {
+        return weatherController.filterData(result)
+    }, errHandler)
+    .catch(console.error)
 
-  Promise.all([weather])
-  .then(([weatherData]) => {
+  const todaysName = getTodaysName(3000)
+
+  Promise.all([weather, todaysName])
+  .then(([weatherData, todaysNameData]) => {
     return res.render('index', {
-      title: "MM10K", 
-      weatherData: weatherData
+      title: 'MM10K', 
+      weatherData: weatherData,
+      todaysNames: todaysNameData
     })
   });
 }
