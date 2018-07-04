@@ -19,8 +19,11 @@ app.use((req, res, next) => {
 
 app.use('/', routes);
 
+// Update clock
+const clock = require('./controllers/clockController')
+
 setInterval(function() {
-  io.emit('data', 'random number: ' + Math.random().toString());
+  io.emit('clock', clock.getCurrentTime());
 }, 1000);
 
 io.on('connection', function (socket) {

@@ -31,19 +31,13 @@ exports.getCurrentTime = function (givenTime) {
   const d = !givenTime ? new Date() : new Date(givenTime)
   const hour = d.getUTCHours()
   const minute = d.getMinutes()
-  const seconds = d.getSeconds()
   const day = getWeekDayAsString(d.getDay())
   const month = getMonthAsString(d.getMonth())
-  const date = d.getDate()
-  const year = parseInt(d.getFullYear().toString().substr(-2))
+  const date = `${day}, ${month} ${d.getDate()}`
 
   return {
     hour,
     minute,
-    seconds,
-    day,
-    month,
-    date,
-    year
+    date
   }
 }

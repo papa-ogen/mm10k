@@ -8,11 +8,7 @@ test('should create clock object', function (t) {
   const expectedClockObject = {
     hour: 12,
     minute: 33,
-    seconds: 36,
-    day: 'Onsdag',
-    month: 'Juli',
-    date: 4,
-    year: 18
+    date: 'Onsdag, Juli 4'
   }
 
   t.deepEquals(clock.getCurrentTime(givenTime), expectedClockObject)

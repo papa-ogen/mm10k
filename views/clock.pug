@@ -9,3 +9,12 @@ section.mm-clock
       div.mm-date Söndag, September 17
       div.mm-names 
         span #{todaysNames}
+
+script.
+  var socket = io();
+
+  socket.on('clock', function(data) {
+    document.querySelector('.mm-hour').innerHTML = data.hour;
+    document.querySelector('.mm-minute').innerHTML = data.minute;
+    document.querySelector('.mm-date').innerHTML = data.date;
+  });
