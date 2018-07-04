@@ -28,8 +28,8 @@ const getMonthAsString = monthNumber => {
 }
 
 exports.getCurrentTime = function (givenTime) {
-  const d = !givenTime ? new Date() : new Date(givenTime)
-  const hour = d.getUTCHours()
+  const d = !givenTime ? new Date() : givenTime
+  const hour = d.getHours()
   const minute = d.getMinutes()
   const day = getWeekDayAsString(d.getDay())
   const month = getMonthAsString(d.getMonth())
