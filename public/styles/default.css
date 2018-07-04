@@ -14,11 +14,14 @@ body {
 }
 
 .bg { 
-  background-image: url('../backgounds/leon-cool.jpg');
   height: 100%; 
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+}
+
+.bg-image-1 {
+  background-image: url('../backgounds/leon-cool.jpg');
 }
 
 .vignette {
