@@ -18,3 +18,7 @@ script.
     document.querySelector('.mm-minute').innerHTML = data.minute;
     document.querySelector('.mm-date').innerHTML = data.date;
   });
+
+  socket.on('todaysNames', function(data) {
+    console.log('getting names', data);
+  });

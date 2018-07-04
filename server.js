@@ -6,6 +6,8 @@ const routes = require('./routes/index');
 const app = express();
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
+const ontime = require('ontime')
+const api = require('./routes/api')
 
 app.set('views', __dirname + '/views');
 app.set('view engine', 'pug')
@@ -25,6 +27,22 @@ const clock = require('./controllers/clockController')
 setInterval(function() {
   io.emit('clock', clock.getCurrentTime());
 }, 1000);
+
+ontime({
+  cycle: [ '00:00:01']
+}, function (ot) {
+  // Get todays name
+  const requestUrl = 'http://api.dryg.net/dagar/v2.1/'
+  api.getData(requestUrl)
+  .then(JSON.parse, api.errHandler)
+  .then((data) => {
+      io.emit('todaysNames', data.dagar[0].namnsdag.join(', '));
+    }, api.errHandler)
+    .catch(console.error)
+
+  ot.done()
+  return
+})
 
 io.on('connection', function (socket) {
   console.log('client connected');       

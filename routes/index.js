@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const weatherController = require('../controllers/weatherController');
 const api = require('./api');
+const request = require('request');
 
 // Get todays name
 const requestUrl = 'http://api.dryg.net/dagar/v2.1/'
