@@ -29,27 +29,12 @@ socketSrc.getBgImages(io);
 // Get todays name
 socketSrc.getTodaysName(io);
 
-// ontime({
-//   cycle: [ '00:00:01']
-// }, function (ot) {
-//   const requestUrl = 'http://api.dryg.net/dagar/v2.1/'
-//   api.getData(requestUrl)
-//   .then(JSON.parse, api.errHandler)
-//   .then((data) => {
-//       io.emit('todaysNames', data.dagar[0].namnsdag.join(', '));
-//     }, api.errHandler)
-//     .catch(console.error)
-
-//   ot.done()
-//   return
-// })
-
 io.on('connection', function (socket) {
   console.log('client connected');
   
   socket.on('disconnect', function() {
     console.log('client disconnected');
-  });  
+  });
 });
 
 http.listen(3000, function() {
