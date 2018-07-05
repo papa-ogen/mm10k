@@ -1,7 +1,7 @@
 const test = require('tape')
-const clock = require('../../controllers/clockController')
+const clock = require('../controllers/clockController')
 
-test('should create clock object', (t) => {
+test('Clock: should create clock object', (t) => {
   t.plan(1)
 
   const givenTime = new Date(2018, 6, 4, 12, 33, 30, 0)

@@ -1,0 +1,5 @@
+mixin tripList(trip)
+  ul.mm-triplist
+    each item in trip.trip
+      li Ta #{item.name} mot #{item.dir} (#{item.time})
+    li Framme vid #{trip.destination} #{trip.time}

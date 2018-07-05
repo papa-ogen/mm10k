@@ -1,6 +1,6 @@
 const test = require('tape')
-const wc = require('../../controllers/weatherController')
-const weatherData = require('../../data/weather_data')
+const wc = require('../controllers/weatherController')
+const weatherData = require('../data/weather_data')
 
 test('should translate weather type', (t) => {
   t.plan(12)
