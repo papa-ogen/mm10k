@@ -1,13 +1,14 @@
 require('dotenv').config()
 const express = require('express')
 const helpers = require('./helpers');
-const routes = require('./routes/index');
+const routes = require('./src/index');
 
 const app = express();
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
-const ontime = require('ontime')
-const api = require('./routes/api')
+const ontime = require('ontime');
+const api = require('./src/api');
+const socketSrc = require('./src/socketSrc')
 
 app.set('views', __dirname + '/views');
 app.set('view engine', 'pug')
@@ -44,8 +45,11 @@ ontime({
   return
 })
 
+socketSrc.getBgImages(io);
+
 io.on('connection', function (socket) {
-  console.log('client connected');       
+  
+
   socket.on('disconnect', function() {
       console.log('client disconnected');
   });  

@@ -24,12 +24,16 @@ body {
   transition: opacity 1s ease-in-out;
 }
 
-.bg-image--top:hover {
+.bg-image--top {
+  opacity: 1;
+}
+
+.bg-image--bottom {
   opacity:0;
 }
 
 .vignette {
-  position: fixed;
+  z-index: 999;
   top: 0;
   left: 0;
   width: 100%;

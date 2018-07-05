@@ -1,3 +1,41 @@
-div
+main.vignette
   img(src="/backgrounds/02.jpg" alt="bg image" class='bg-image bg-image--bottom')
   img(src="/backgrounds/01.jpg" alt="bg image" class='bg-image bg-image--top')
+
+  script.
+    var socket = io();
+
+    socket.on('bg-image', function(imageFiles) {
+      var bgImage1 = document.querySelector('.bg-image--bottom')
+      var bgImage2 = document.querySelector('.bg-image--top')
+      var imagePath = './backgrounds/';
+
+      function setBgImage(element, imgName) { element.src = imagePath + imgName; }
+
+      function toggleImageOpacity(element) {
+        element.style.opacity = isHidden(element) ? 1 : 0;
+      }
+
+      function isHidden(element) {
+        return window.getComputedStyle(element, null).opacity == 0; }
+
+      function randomIntFromInterval(min,max) {
+        return Math.floor(Math.random()*(max-min+1)+min);
+      }
+
+      function getRandomImageName(images) {
+        var randomNr = randomIntFromInterval(0, images.length - 1);
+        return imageFiles[randomNr];
+      }
+
+      setInterval(function() {
+        var nextImage = getRandomImageName(imageFiles);
+        var hiddenImage = isHidden(bgImage1) ? bgImage1 : bgImage2;
+        var visibleImage = !isHidden(bgImage1) ? bgImage1 : bgImage2;
+
+        toggleImageOpacity(hiddenImage);
+        toggleImageOpacity(visibleImage);
+
+        setTimeout(function(){ setBgImage(visibleImage, nextImage); }, 2000);
+      }, 4000);
+    });
