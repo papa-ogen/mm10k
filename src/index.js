@@ -1,31 +1,28 @@
-const express = require('express');
-const router = express.Router();
-const api = require('./api');
-const weather = require('./weather');
-const todaysNames = require('./todaysName');
+const express = require('express')
+const router = express.Router()
+const weather = require('./weather')
+const todaysNames = require('./todaysName')
 
 // Get todays name
-const getTodaysName = todaysNames.get();
+const getTodaysName = todaysNames.get()
 
 // Get weather forecast
-let getWeather = undefined
-if(!process.env.WEATHER_KEY) {
-  getWeather = Promise.resolve({});
+let getWeather
+if (!process.env.WEATHER_KEY) {
+  getWeather = Promise.resolve({})
 } else {
-  getWeather = weather.getWeather();
+  getWeather = weather.getWeather()
 }
 
-router.get('/', function (req, res) {
+router.get('/', (req, res) => {
   Promise.all([getWeather, getTodaysName])
-  .then(([weatherData, todaysNameData]) => {
-    return res.render('index', {
-      title: 'MM10K', 
-      weatherData: weatherData,
-      todaysNames: todaysNameData
-    })
-  });
+    .then(([weatherData, todaysNamesData]) => res.render('index', {
+      title: 'MM10K',
+      weatherData,
+      todaysNames: todaysNamesData,
+    }))
 })
 
-router.get('/weather', weather.weatherController);
+router.get('/weather', weather.weatherController)
 
-module.exports = router;
+module.exports = router

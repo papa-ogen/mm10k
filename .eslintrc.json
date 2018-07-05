@@ -5,7 +5,8 @@
   },
   "rules": {
     "quotes": ["error", "single"],
-    "semi": ["error", "never"]
+    "semi": ["error", "never"],
+    "import/newline-after-import": 0
   },
   "parserOptions": {
     "ecmaVersion": 6
