@@ -1,33 +1,19 @@
 const express = require('express');
 const router = express.Router();
-const weatherController = require('../controllers/weatherController');
 const api = require('./api');
+const weather = require('./weather');
+const todaysNames = require('./todaysName');
 
 // Get todays name
-const requestUrl = 'http://api.dryg.net/dagar/v2.1/'
-const getTodaysName = api.getData(requestUrl)
-  .then(JSON.parse, api.errHandler)
-  .then((data) => {
-      return data.dagar[0].namnsdag.join(', ')
-  }, api.errHandler)
-  .catch(console.error)
+const getTodaysName = todaysNames.get();
 
 // Get weather forecast
-const apiParams = {
-  apiUrl: 'http://api.openweathermap.org/data/2.5/forecast',
-  apiKey: process.env.WEATHER_KEY,
-  coords: {
-    lat: 59.3833,
-    lon: 17.8333
-  }
+let getWeather = undefined
+if(!process.env.WEATHER_KEY) {
+  getWeather = Promise.resolve({});
+} else {
+  getWeather = weather.getWeather();
 }
-const weatherRequestUrl = weatherController.createRequestUrl(apiParams)
-const getWeather = api.getData(weatherRequestUrl)
-  .then(JSON.parse, api.errHandler)
-  .then((result) => {
-      return weatherController.filterData(result)
-  }, api.errHandler)
-  .catch(console.error)
 
 router.get('/', function (req, res) {
   Promise.all([getWeather, getTodaysName])
@@ -40,6 +26,6 @@ router.get('/', function (req, res) {
   });
 })
 
-router.get('/weather', weatherController.homePage);
+router.get('/weather', weather.weatherController);
 
 module.exports = router;
