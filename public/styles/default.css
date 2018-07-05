@@ -13,15 +13,19 @@ body {
   font-family: 'Raleway', sans-serif;
 }
 
-.bg { 
-  height: 100%; 
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
+.bg-image {
+  position: absolute;
+  width: 100%;
+  z-index: -10;
+  object-fit: contain;
+  -webkit-transition: opacity 1s ease-in-out;
+  -moz-transition: opacity 1s ease-in-out;
+  -o-transition: opacity 1s ease-in-out;
+  transition: opacity 1s ease-in-out;
 }
 
-.bg-image-1 {
-  background-image: url('../backgounds/01.jpg');
+.bg-image--top:hover {
+  opacity:0;
 }
 
 .vignette {
