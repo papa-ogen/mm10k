@@ -5,6 +5,7 @@
   "main": "server.js",
   "scripts": {
     "test": "tape 'tests/**/*.js' | tap-spec",
+    "test-browser": "browserify -t babelify tests/*.js | browser-run -p 2222 | tap-spec",
     "start": "nodemon server.js"
   },
   "repository": {
@@ -28,6 +29,9 @@
     "socket.io": "^2.1.1"
   },
   "devDependencies": {
+    "babelify": "^8.0.0",
+    "browser-run": "^5.0.0",
+    "browserify": "^16.2.2",
     "eslint": "^4.19.1",
     "eslint-config-airbnb-base": "^13.0.0",
     "eslint-plugin-import": "^2.13.0",
