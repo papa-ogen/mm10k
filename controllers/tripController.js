@@ -1,5 +1,24 @@
 const ALLOWED_TRIP_TYPES = ['Metros', 'Buses', 'Trains']
 
+const prettifyTimestamp = timestamp => timestamp.substr(timestamp.length - 8, 5)
+
+exports.prettifyTimestamp = prettifyTimestamp
+
+const convertTransportMode = (mode) => {
+  switch (mode) {
+    case 'BUS':
+      return 'Buss'
+    case 'TRAIN':
+      return 'Tåg'
+    case 'METRO':
+      return 'Tunnelbana'
+    default:
+      return 'Linje'
+  }
+}
+
+exports.convertTransportMode = convertTransportMode
+
 exports.createRequestUrl = ({
   apiUrl,
   apiKey,
@@ -19,12 +38,12 @@ const filterTrips = tripGroup => tripGroup.map(({
 }) => ({
   GroupOfLine,
   DisplayTime,
-  TransportMode,
+  TransportMode: convertTransportMode(TransportMode),
   LineNumber,
   Destination,
   StopAreaName,
-  TimeTabledDateTime,
-  ExpectedDateTime,
+  TimeTabledDateTime: prettifyTimestamp(TimeTabledDateTime),
+  ExpectedDateTime: prettifyTimestamp(ExpectedDateTime),
   Deviations,
 }))
 

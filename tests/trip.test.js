@@ -45,3 +45,12 @@ test('Trip: should create Site ID request URL', (t) => {
 
   t.equal(tc.createSiteIdRequestUrl(givenParams, searchstring), expectedUrl, 'URLs missmatch!')
 })
+
+test('Trip: should prettify Timestamp', (t) => {
+  t.plan(1)
+
+  const givenTimestamp = '2018-07-06T11:46:12'
+  const expectedTimestamp = '11:46'
+
+  t.equal(tc.prettifyTimestamp(givenTimestamp), expectedTimestamp, 'Wrong timestamp returned')
+})

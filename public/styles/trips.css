@@ -1,0 +1,16 @@
+.mm-trips {
+  float: right;
+}
+
+.mm-trips ul {
+  list-style-type: none;
+  font-family: 'Roboto', sans-serif;
+}
+
+.mm-trips li {
+  padding-bottom: 1rem;
+}
+
+.mm-trips p {
+  font-size: 14px;
+}

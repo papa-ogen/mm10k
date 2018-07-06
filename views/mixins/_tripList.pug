@@ -1,5 +1,10 @@
-mixin tripList(trip)
+mixin tripList(trips)
   ul.mm-triplist
-    each item in trip.trip
-      li Ta #{item.name} mot #{item.dir} (#{item.time})
-    li Framme vid #{trip.destination} #{trip.time}
+    each trip in trips
+      li
+        h3 #{trip.StopAreaName}
+        p #{trip.TransportMode} #{trip.LineNumber} mot #{trip.Destination}
+        p 
+          | G&aring;r om 
+          b #{trip.DisplayTime} 
+          | (#{trip.TimeTabledDateTime}, f&ouml;rv&auml;ntas g&aring; #{trip.ExpectedDateTime})

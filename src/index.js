@@ -15,12 +15,21 @@ if (!process.env.WEATHER_KEY) {
   getWeather = weather.getWeather()
 }
 
+// Get trips
+let getTrips
+if (!process.env.TRAFIKLAB_KEY) {
+  getTrips = Promise.resolve({})
+} else {
+  getTrips = trips.getTrips()
+}
+
 router.get('/', (req, res) => {
-  Promise.all([getWeather, getTodaysName])
-    .then(([weatherData, todaysNamesData]) => res.render('index', {
+  Promise.all([getWeather, getTodaysName, getTrips])
+    .then(([weatherData, todaysNamesData, tripsData]) => res.render('index', {
       title: 'MM10K',
       weatherData,
       todaysNames: todaysNamesData,
+      tripsData,
     }))
 })
 

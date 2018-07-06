@@ -1,8 +1,0 @@
-include mixins/_tripList
-  
-section.columns.mm-commute
-  .column
-    h1.mm--h1 Resa
-    each trip in trips
-      span Från #{trip.origin} till #{trip.destination} (#{trip.dur} min)
-      +tripList(trip)
