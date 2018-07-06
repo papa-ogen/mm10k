@@ -33,6 +33,15 @@ test('Trip: should merge allowed trip types into one array', (t) => {
   t.deepEquals(tc.mergeTripTypes(givenTrips), expectedTrips, 'Merged objects doesnt match given object')
 })
 
-// test('should return filtered list of data from api call', (t) => {
-//   t.plan(1)
-// })
+test('Trip: should create Site ID request URL', (t) => {
+  t.plan(1)
+
+  const givenParams = {
+    apiUrl: 'http://api.sl.se/api2/typeahead.json',
+    apiKey: 'abc123',
+  }
+  const searchstring = 'tellusvägen'
+  const expectedUrl = 'http://api.sl.se/api2/typeahead.json?key=abc123&searchstring=tellusvägen'
+
+  t.equal(tc.createSiteIdRequestUrl(givenParams, searchstring), expectedUrl, 'URLs missmatch!')
+})

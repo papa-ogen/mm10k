@@ -33,4 +33,11 @@ router.get('/trips', (req, res) => {
     })
 })
 
+router.get('/gettripsiteid/:searchstring', (req, res) => {
+  trips.getTripSiteId(req.params.searchstring)
+    .then((tripData) => {
+      res.json(tripData)
+    })
+})
+
 module.exports = router

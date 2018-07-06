@@ -41,3 +41,8 @@ exports.mergeTripTypes = (trips) => {
 
   return mergedTrips
 }
+
+exports.createSiteIdRequestUrl = ({
+  apiUrl,
+  apiKey,
+}, searchstring) => `${apiUrl}?key=${apiKey}&searchstring=${searchstring}`
