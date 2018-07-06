@@ -1,28 +1,37 @@
 const test = require('tape')
 const tc = require('../controllers/tripController')
+const tripData = require('../data/trip_data_9286')
 
 test('Trip: should create request URL', (t) => {
   t.plan(1)
 
   const givenParams = {
-    apiUrl: 'https://api.sl.se/api2/TravelplannerV2/trip.json',
+    apiUrl: 'http://api.sl.se/api2/realtimedeparturesV4.json',
     apiKey: 'abc123',
-    originCoordLat: 59.3833,
-    originCoordLong: 17.8333,
-    originCoordName: 'Tellus',
-    destCoordLat: 59.3308,
-    destCoordLong: 18.0631,
-    destCoordName: 'T-centralen',
+    siteId: 123456,
   }
-  const expectedUrl = 'https://api.sl.se/api2/TravelplannerV2/trip.json?key=abc123&originCoordLat=59.3833&originCoordLong=17.8333&originCoordName=Tellus&destCoordLat=59.3308&destCoordLong=18.0631&destCoordName=T-centralen'
+  const expectedUrl = 'http://api.sl.se/api2/realtimedeparturesV4.json?key=abc123&siteid=123456'
 
-  t.equal(tc.createRequestUrl(givenParams), expectedUrl)
+  t.equal(tc.createRequestUrl(givenParams), expectedUrl, 'URLs missmatch!')
 })
 
-// test('should filter away results of type WALK', (t) => {
-//   t.plan(1)
+test('Trip: should create a filtered bundle of METRO trips', (t) => {
+  t.plan(1)
 
-// })
+  const givenTrips = tripData.givenTripData.ResponseData.Metros
+  const expectedTrips = tripData.expectedFilteredTrip
+
+  t.deepEquals(tc.filterTrips(givenTrips), expectedTrips, 'Trips doesnt match given object')
+})
+
+test('Trip: should merge allowed trip types into one array', (t) => {
+  t.plan(1)
+
+  const givenTrips = tripData.givenTripData.ResponseData
+  const expectedTrips = tripData.expectedTripData
+
+  t.deepEquals(tc.mergeTripTypes(givenTrips), expectedTrips, 'Merged objects doesnt match given object')
+})
 
 // test('should return filtered list of data from api call', (t) => {
 //   t.plan(1)

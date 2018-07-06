@@ -2,7 +2,7 @@ const test = require('tape')
 const wc = require('../controllers/weatherController')
 const weatherData = require('../data/weather_data')
 
-test('should translate weather type', (t) => {
+test('Weather: should translate weather type', (t) => {
   t.plan(12)
 
   const weatherTypes = ['clear', 'clear sky', 'few clouds', 'scattered clouds', 'broken clouds', 'clouds', 'shower rain', 'rain', 'thunderstorm', 'snow', 'mist', 'clear']
@@ -13,7 +13,7 @@ test('should translate weather type', (t) => {
   })
 })
 
-test('should return same value in lowercase', (t) => {
+test('Weather: should return same value in lowercase', (t) => {
   t.plan(1)
 
   const givenValue = 'Didde'
@@ -22,7 +22,7 @@ test('should return same value in lowercase', (t) => {
   t.equal(wc.translateWeatherType(givenValue), expectedValue)
 })
 
-test('should return current day in Swedish', (t) => {
+test('Weather: should return current day in Swedish', (t) => {
   t.plan(7)
 
   const weekDays = ['Söndag', 'Måndag', 'Tisdag', 'Onsdag', 'Torsdag', 'Fredag', 'Lördag']
@@ -32,7 +32,7 @@ test('should return current day in Swedish', (t) => {
   })
 })
 
-test('should return CSS class for icon', (t) => {
+test('Weather: should return CSS class for icon', (t) => {
   t.plan(18)
 
   const iconCodes = ['01d', '01n', '02d', '02n', '03d', '03n', '04d', '04n', '09d', '09n', '10d', '10n', '11d', '11n', '13d', '13n', '50d', '50n']
@@ -43,7 +43,7 @@ test('should return CSS class for icon', (t) => {
   })
 })
 
-test('should return default CSS class for icon', (t) => {
+test('Weather: should return default CSS class for icon', (t) => {
   t.plan(1)
 
   const givenValue = 'Didde'
@@ -52,7 +52,7 @@ test('should return default CSS class for icon', (t) => {
   t.equal(wc.getIconCssClass(givenValue), expectedValue)
 })
 
-test('should return monday from date string', (t) => {
+test('Weather: should return monday from date string', (t) => {
   t.plan(1)
 
   const givenDateString = '2018-07-02 21:00:00'
@@ -61,7 +61,7 @@ test('should return monday from date string', (t) => {
   t.equal(wc.getWeekDayNumber(givenDateString), expectedWeekDay)
 })
 
-test('should return sunday if empty date string', (t) => {
+test('Weather: should return sunday if empty date string', (t) => {
   t.plan(1)
 
   const givenDateString = ''
@@ -70,7 +70,7 @@ test('should return sunday if empty date string', (t) => {
   t.equal(wc.getWeekDayNumber(givenDateString), expectedWeekDay)
 })
 
-test('should convert Kelvin to Celsius', (t) => {
+test('Weather: should convert Kelvin to Celsius', (t) => {
   t.plan(1)
 
   const givenTemp = 289.96
@@ -79,7 +79,7 @@ test('should convert Kelvin to Celsius', (t) => {
   t.equal(wc.convertKelvinToCelcius(givenTemp), expectedTemp)
 })
 
-test('should return a new weatherColumn object from a listRow', (t) => {
+test('Weather: should return a new weatherColumn object from a listRow', (t) => {
   t.plan(1)
 
   const givenListRow = {
@@ -124,7 +124,7 @@ test('should return a new weatherColumn object from a listRow', (t) => {
   t.deepEquals(wc.createWeatherColumn(givenListRow), expectedWeatherColumn)
 })
 
-test('should return weather forecast object with 3 items', (t) => {
+test('Weather: should return weather forecast object with 3 items', (t) => {
   t.plan(1)
 
   const givenWeatherData = weatherData.weatherData.list
@@ -142,7 +142,7 @@ test('should return weather forecast object with 3 items', (t) => {
   t.deepEquals(wc.createWeatherForecast(givenWeatherData), expectedWeatherData)
 })
 
-test('should create request URL', (t) => {
+test('Weather: should create request URL', (t) => {
   t.plan(1)
 
   const givenParams = {

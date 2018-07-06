@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 const weather = require('./weather')
 const todaysNames = require('./todaysName')
+const trips = require('./trips')
 
 // Get todays name
 const getTodaysName = todaysNames.get()
@@ -24,5 +25,12 @@ router.get('/', (req, res) => {
 })
 
 router.get('/weather', weather.weatherController)
+
+router.get('/trips', (req, res) => {
+  trips.getTrips()
+    .then((tripData) => {
+      res.json(tripData)
+    })
+})
 
 module.exports = router
