@@ -1,10 +1,11 @@
 const fs = require('fs')
+const path = require('path')
 const ontime = require('ontime')
 const api = require('./api')
 const clock = require('../controllers/clockController')
 
 exports.getBgImages = (io) => {
-  const folder = './public/backgrounds/'
+  const folder = path.join(__dirname, '..', '/public/backgrounds/')
   const imageFiles = []
 
   fs.readdir(folder, (err, files) => {
